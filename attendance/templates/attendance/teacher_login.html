@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Login</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #f4f7fb; color: #173f67; }
+        .navbar { background: #173f67; color: white; padding: 22px 40px; }
+        .card { max-width: 440px; margin: 70px auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,.08); }
+        label { display: block; margin: 18px 0 8px; font-weight: bold; }
+        input { width: 100%; box-sizing: border-box; padding: 13px; border: 1px solid #ccc; border-radius: 7px; font-size: 16px; }
+        button { margin-top: 25px; background: #2176bd; color: white; border: 0; padding: 13px 25px; border-radius: 7px; cursor: pointer; font-size: 16px; }
+        .error { color: #b42318; margin-top: 20px; }
+        a { display: inline-block; margin-top: 25px; color: #2176bd; }
+    </style>
+</head>
+<body>
+    <div class="navbar"><h1>Face Attendance System</h1></div>
+    <main class="card">
+        <h2>Teacher Login</h2>
+        <p>Sign in to select the attendance session for students.</p>
+        <form method="post">
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input id="username" name="username" autocomplete="username" required autofocus>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+            <button type="submit">Sign in</button>
+        </form>
+        {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+        <a href="{% url 'home' %}">&larr; Back to home</a>
+    </main>
+</body>
+</html>

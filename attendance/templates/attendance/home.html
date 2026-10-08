@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Face Attendance System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+
+            background:
+                radial-gradient(circle at 15% 20%, rgba(120, 90, 255, 0.30), transparent 30%),
+                radial-gradient(circle at 85% 80%, rgba(0, 190, 255, 0.25), transparent 30%),
+                linear-gradient(135deg, #eef2ff, #f5f8ff, #e8f7ff);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+        }
+
+
+        /* Decorative background circles */
+
+        .circle {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(2px);
+            z-index: -1;
+        }
+
+        .circle-one {
+            width: 180px;
+            height: 180px;
+            background: rgba(91, 78, 255, 0.18);
+            top: -60px;
+            left: -50px;
+        }
+
+        .circle-two {
+            width: 230px;
+            height: 230px;
+            background: rgba(0, 188, 212, 0.15);
+            bottom: -80px;
+            right: -70px;
+        }
+
+
+        /* Main container */
+
+        .container {
+            width: 92%;
+            max-width: 760px;
+
+            background: rgba(255, 255, 255, 0.88);
+
+            padding: 55px 55px;
+
+            border-radius: 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 20px 60px rgba(45, 55, 120, 0.15);
+
+            backdrop-filter: blur(12px);
+
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+
+        /* Camera icon */
+
+        .icon {
+            width: 75px;
+            height: 75px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 22px;
+
+            font-size: 38px;
+
+            background: linear-gradient(
+                135deg,
+                #6c63ff,
+                #00bcd4
+            );
+
+            box-shadow:
+                0 10px 25px rgba(92, 86, 220, 0.25);
+        }
+
+
+        /* Heading */
+
+        h1 {
+            margin: 0 0 12px;
+
+            font-size: 38px;
+
+            background: linear-gradient(
+                90deg,
+                #4f46e5,
+                #087ea4
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .subtitle {
+            margin: 0 0 38px;
+
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+
+        /* Login cards */
+
+        .login-options {
+            display: flex;
+
+            gap: 22px;
+
+            justify-content: center;
+        }
+
+
+        .login-card {
+            position: relative;
+
+            flex: 1;
+
+            text-decoration: none;
+
+            color: white;
+
+            padding: 30px 20px;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        /* Teacher card */
+
+        .teacher-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 12px 25px rgba(79, 70, 229, 0.25);
+        }
+
+
+        /* Admin card */
+
+        .admin-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    #0891b2,
+                    #06b6d4
+                );
+
+            box-shadow:
+                0 12px 25px rgba(8, 145, 178, 0.25);
+        }
+
+
+        .login-card:hover {
+            transform: translateY(-7px) scale(1.02);
+
+            box-shadow:
+                0 18px 35px rgba(50, 60, 120, 0.25);
+        }
+
+
+        .login-card .emoji {
+            display: block;
+
+            font-size: 42px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .login-card h2 {
+            margin: 0 0 9px;
+
+            font-size: 22px;
+        }
+
+
+        .login-card p {
+            margin: 0;
+
+            font-size: 14px;
+
+            opacity: 0.92;
+        }
+
+
+        /* Small shine effect */
+
+        .login-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+            height: 120px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            top: -55px;
+            right: -40px;
+        }
+
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .login-options {
+                flex-direction: column;
+            }
+
+            .login-card {
+                padding: 25px 20px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- Decorative background -->
+
+    <div class="circle circle-one"></div>
+    <div class="circle circle-two"></div>
+
+
+    <div class="container">
+
+        <h1>
+            Welcome
+        </h1>
+
+
+        <p class="subtitle">
+        
+            Please select your login type to continue.
+        </p>
+
+
+        <div class="login-options">
+
+
+            <!-- TEACHER LOGIN -->
+
+            <a
+                href="{% url 'teacher_login' %}"
+                class="login-card teacher-card"
+            >
+
+                <span class="emoji">
+                    👨‍🏫
+                </span>
+
+                <h2>
+                    Teacher Login
+                </h2>
+
+                <p>
+                    Create and manage attendance sessions
+                </p>
+
+            </a>
+
+
+            <!-- ADMIN LOGIN -->
+
+            <a
+                href="/admin/"
+                class="login-card admin-card"
+            >
+
+                <span class="emoji">
+                    🔐
+                </span>
+
+                <h2>
+                    Admin Login
+                </h2>
+
+                <p>
+                    Manage students, teachers and system data
+                </p>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</body>
+</html>

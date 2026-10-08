@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Teacher Dashboard</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(124, 58, 237, 0.15),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(6, 182, 212, 0.15),
+                    transparent 30%
+                ),
+
+                #f4f7fb;
+
+            color: #173f67;
+
+        }
+
+
+        /* =================================================
+           NAVBAR
+        ================================================= */
+
+        .navbar {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4338ca,
+                    #2563eb
+                );
+
+            color: white;
+
+            padding: 20px 40px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow:
+                0 5px 20px
+                rgba(37, 99, 235, 0.20);
+
+        }
+
+
+        .navbar h1 {
+
+            margin: 0;
+
+            font-size: 27px;
+
+        }
+
+
+        .navbar form {
+
+            margin: 0;
+
+        }
+
+
+        .navbar button {
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            color: white;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.7);
+
+            border-radius: 8px;
+
+            padding: 9px 16px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .navbar button:hover {
+
+            background: white;
+
+            color: #4338ca;
+
+        }
+
+
+        /* =================================================
+           MAIN
+        ================================================= */
+
+        main {
+
+            max-width: 900px;
+
+            margin: 45px auto;
+
+            padding: 0 20px;
+
+        }
+
+
+        /* =================================================
+           WELCOME
+        ================================================= */
+
+        .welcome {
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .welcome h2 {
+
+            margin-bottom: 8px;
+
+            font-size: 30px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #4338ca,
+                    #0891b2
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+        }
+
+
+        .welcome p {
+
+            margin-top: 0;
+
+            color: #64748b;
+
+            font-size: 16px;
+
+        }
+
+
+        /* =================================================
+           CREATE SESSION
+        ================================================= */
+
+        .create-box {
+
+            background:
+                rgba(255, 255, 255, 0.92);
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(30, 60, 120, 0.10);
+
+            margin-bottom: 35px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.8);
+
+        }
+
+
+        .create-box h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+            font-size: 22px;
+
+        }
+
+
+        .create-form {
+
+            display: flex;
+
+            gap: 12px;
+
+        }
+
+
+        .create-form input {
+
+            flex: 1;
+
+            padding: 13px 15px;
+
+            border:
+                1px solid
+                #d1d5db;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        .create-form input:focus {
+
+            border-color: #6366f1;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(99, 102, 241, 0.12);
+
+        }
+
+
+        /* =================================================
+           GENERAL BUTTON
+        ================================================= */
+
+        button {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #2563eb
+                );
+
+            color: white;
+
+            border: 0;
+
+            border-radius: 9px;
+
+            padding: 12px 20px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+
+        }
+
+
+        button:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 7px 18px
+                rgba(37, 99, 235, 0.25);
+
+        }
+
+
+        /* =================================================
+           SESSION HEADING
+        ================================================= */
+
+        .session-heading {
+
+            margin-bottom: 18px;
+
+            font-size: 23px;
+
+        }
+
+
+        /* =================================================
+           SESSION CARD
+        ================================================= */
+
+        .card {
+
+            background: white;
+
+            padding: 28px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(30, 60, 120, 0.09);
+
+            margin-bottom: 18px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            border-left:
+                5px solid
+                #6366f1;
+
+            transition: 0.2s;
+
+        }
+
+
+        .card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 14px 35px
+                rgba(30, 60, 120, 0.13);
+
+        }
+
+
+        .card h3 {
+
+            margin-top: 0;
+
+            margin-bottom: 10px;
+
+            font-size: 21px;
+
+        }
+
+
+        .card p {
+
+            margin-bottom: 8px;
+
+            color: #64748b;
+
+        }
+
+
+        /* =================================================
+           ACTIVE
+        ================================================= */
+
+        .active {
+
+            color: #078647 !important;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =================================================
+           INACTIVE
+        ================================================= */
+
+        .inactive {
+
+            color: #777 !important;
+
+        }
+
+
+        /* =================================================
+           STOP BUTTON
+        ================================================= */
+
+        .stop-button {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef4444,
+                    #dc2626
+                );
+
+        }
+
+
+        .stop-button:hover {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dc2626,
+                    #b91c1c
+                );
+
+        }
+
+
+        /* =================================================
+           START BUTTON
+        ================================================= */
+
+        .start-button {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #059669,
+                    #10b981
+                );
+
+        }
+
+
+        .start-button:hover {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #047857,
+                    #059669
+                );
+
+        }
+
+
+        /* =================================================
+           REPORT BUTTON
+        ================================================= */
+
+        .report-button {
+
+            display: inline-block;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #6366f1
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            padding: 12px 20px;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+
+        }
+
+
+        .report-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 7px 18px
+                rgba(99, 102, 241, 0.25);
+
+        }
+
+
+        /* =================================================
+           EMPTY
+        ================================================= */
+
+        .empty {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(30, 60, 120, 0.09);
+
+            text-align: center;
+
+        }
+
+
+        .empty h3 {
+
+            margin-top: 0;
+
+        }
+
+
+        /* =================================================
+           MOBILE
+        ================================================= */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                padding: 18px 20px;
+
+            }
+
+
+            .navbar h1 {
+
+                font-size: 21px;
+
+            }
+
+
+            main {
+
+                margin-top: 30px;
+
+            }
+
+
+            .create-form {
+
+                flex-direction: column;
+
+            }
+
+
+            .card {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+
+            .card form {
+
+                width: 100%;
+
+            }
+
+
+            .card button {
+
+                width: 100%;
+
+            }
+
+
+            .report-button {
+
+                width: 100%;
+
+                text-align: center;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         NAVBAR
+    ================================================= -->
+
+    <div class="navbar">
+
+        <h1>
+            📷 Teacher Dashboard
+        </h1>
+
+
+        <form
+            action="{% url 'teacher_logout' %}"
+            method="post"
+        >
+
+            {% csrf_token %}
+
+            <button type="submit">
+                Sign out
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================= -->
+
+    <main>
+
+
+        <!-- =================================================
+             WELCOME
+        ================================================= -->
+
+        <div class="welcome">
+
+            <h2>
+                Welcome, {{ teacher.name }}
+            </h2>
+
+            <p>
+                Create and manage your attendance sessions.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             CREATE NEW SESSION
+        ================================================= -->
+
+        <section class="create-box">
+
+            <h2>
+                ➕ Create New Attendance Session
+            </h2>
+
+
+            <form
+                action="{% url 'create_attendance_session' %}"
+                method="post"
+                class="create-form"
+            >
+
+                {% csrf_token %}
+
+
+                <input
+                    type="text"
+                    name="subject"
+                    placeholder="Enter subject name"
+                    required
+                >
+
+
+                <button type="submit">
+                    Create Session
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- =================================================
+             EXISTING SESSIONS
+        ================================================= -->
+
+        <h2 class="session-heading">
+            📚 Your Attendance Sessions
+        </h2>
+
+
+        {% for session in sessions %}
+
+
+            <!-- =================================================
+                 SESSION CARD
+            ================================================= -->
+
+            <section class="card">
+
+
+                <div>
+
+                    <h3>
+                        {{ session.subject }}
+                    </h3>
+
+
+                    <p>
+                        📅 Date: {{ session.date }}
+                    </p>
+
+
+                    {% if session.is_active %}
+
+                        <p class="active">
+                            ● Attendance is ACTIVE
+                        </p>
+
+                    {% else %}
+
+                        <p class="inactive">
+                            ● Attendance is stopped
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div>
+
+
+                    {% if session.is_active %}
+
+
+                        <!-- =====================================
+                             STOP ATTENDANCE
+                        ====================================== -->
+
+                        <form
+                            action="{% url 'stop_attendance_session' session.id %}"
+                            method="post"
+                            onsubmit="return confirmStopAttendance();"
+                        >
+
+                            {% csrf_token %}
+
+
+                            <button
+                                type="submit"
+                                class="stop-button"
+                            >
+                                ⏹ Stop Attendance
+                            </button>
+
+                        </form>
+
+
+                    {% else %}
+
+
+                        <!-- =====================================
+                             OLD SESSION ACTIONS
+                        ====================================== -->
+
+                        <div
+                            style="
+                                display: flex;
+                                gap: 10px;
+                                flex-wrap: wrap;
+                            "
+                        >
+
+
+                            <!-- VIEW REPORT -->
+
+                            <a
+                                href="{% url 'attendance_report' session.id %}"
+                                class="report-button"
+                            >
+                                📊 View Report
+                            </a>
+
+
+                            <!-- START ATTENDANCE AGAIN -->
+
+                            <form
+                                action="{% url 'select_attendance_session' session.id %}"
+                                method="post"
+                            >
+
+                                {% csrf_token %}
+
+
+                                <button
+                                    type="submit"
+                                    class="start-button"
+                                >
+                                    ▶ Start Attendance
+                                </button>
+
+                            </form>
+
+                        </div>
+
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </section>
+
+
+        {% empty %}
+
+
+            <!-- =================================================
+                 NO SESSIONS
+            ================================================= -->
+
+            <section class="empty">
+
+                <h3>
+                    📚 No sessions yet
+                </h3>
+
+                <p>
+                    Create your first attendance session
+                    using the form above.
+                </p>
+
+            </section>
+
+
+        {% endfor %}
+
+
+    </main>
+
+
+    <!-- =================================================
+         JAVASCRIPT
+    ================================================= -->
+
+    <script>
+
+        function confirmStopAttendance() {
+
+            return confirm(
+
+                "Are you sure you want to stop attendance?\n\n" +
+
+                "After stopping, students will no longer " +
+
+                "be able to mark attendance for this session."
+
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
