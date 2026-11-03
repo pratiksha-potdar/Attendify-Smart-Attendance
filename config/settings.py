@@ -1,3 +1,4 @@
+
 """
 Django settings for config project.
 """
@@ -15,15 +16,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # --------------------------------------------------
 
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY",
-    "django-insecure-development-key-change-before-deployment"
-)
-
 DEBUG = os.environ.get(
     "DEBUG",
     "True"
 ).lower() == "true"
+
+
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = "django-insecure-local-development-only"
+    else:
+        from django.core.exceptions import ImproperlyConfigured
+
+        raise ImproperlyConfigured(
+            "DJANGO_SECRET_KEY must be set in production."
+        )
 
 
 # --------------------------------------------------
@@ -35,14 +44,10 @@ ALLOWED_HOSTS = [
     "localhost",
 ]
 
-render_host = os.environ.get(
-    "RENDER_EXTERNAL_HOSTNAME"
-)
+render_host = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 
 if render_host:
-    ALLOWED_HOSTS.append(
-        render_host
-    )
+    ALLOWED_HOSTS.append(render_host)
 
 
 # --------------------------------------------------
@@ -56,23 +61,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "attendance",
 ]
 
 
 # Add Cloudinary only when configured.
 if os.environ.get("CLOUDINARY_URL"):
-
-    INSTALLED_APPS.insert(
-        -1,
-        "cloudinary_storage"
-    )
-
-    INSTALLED_APPS.insert(
-        -1,
-        "cloudinary"
-    )
+    INSTALLED_APPS.insert(-1, "cloudinary_storage")
+    INSTALLED_APPS.insert(-1, "cloudinary")
 
 
 # --------------------------------------------------
@@ -81,9 +77,7 @@ if os.environ.get("CLOUDINARY_URL"):
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-
     "whitenoise.middleware.WhiteNoiseMiddleware",
-
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -107,17 +101,12 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-
         "DIRS": [],
-
         "APP_DIRS": True,
-
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
-
                 "django.contrib.auth.context_processors.auth",
-
                 "django.contrib.messages.context_processors.messages",
             ],
         },
@@ -132,28 +121,16 @@ WSGI_APPLICATION = "config.wsgi.application"
 # DATABASE
 # --------------------------------------------------
 
-# On Render:
-# DATABASE_URL will be provided by Render PostgreSQL.
-#
-# Locally:
-# If DATABASE_URL does not exist, Django will continue
-# using the existing SQLite database.
-
-database_url = os.environ.get(
-    "DATABASE_URL"
-)
+database_url = os.environ.get("DATABASE_URL")
 
 if database_url:
-
     DATABASES = {
         "default": dj_database_url.parse(
             database_url,
             conn_max_age=600,
         )
     }
-
 else:
-
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -173,21 +150,18 @@ AUTH_PASSWORD_VALIDATORS = [
             "UserAttributeSimilarityValidator"
         ),
     },
-
     {
         "NAME": (
             "django.contrib.auth.password_validation."
             "MinimumLengthValidator"
         ),
     },
-
     {
         "NAME": (
             "django.contrib.auth.password_validation."
             "CommonPasswordValidator"
         ),
     },
-
     {
         "NAME": (
             "django.contrib.auth.password_validation."
@@ -234,9 +208,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 if os.environ.get("CLOUDINARY_URL"):
 
-    # Production:
-    # Student face images will be stored in Cloudinary.
-
     STORAGES = {
         "default": {
             "BACKEND": (
@@ -244,7 +215,6 @@ if os.environ.get("CLOUDINARY_URL"):
                 "MediaCloudinaryStorage"
             ),
         },
-
         "staticfiles": {
             "BACKEND": (
                 "whitenoise.storage."
@@ -255,9 +225,6 @@ if os.environ.get("CLOUDINARY_URL"):
 
 else:
 
-    # Local development:
-    # Uploaded files continue to use local storage.
-
     STORAGES = {
         "default": {
             "BACKEND": (
@@ -265,7 +232,6 @@ else:
                 "FileSystemStorage"
             ),
         },
-
         "staticfiles": {
             "BACKEND": (
                 "whitenoise.storage."
@@ -282,7 +248,6 @@ else:
 CSRF_TRUSTED_ORIGINS = []
 
 if render_host:
-
     CSRF_TRUSTED_ORIGINS.append(
         f"https://{render_host}"
     )
@@ -292,6 +257,4 @@ if render_host:
 # DEFAULT PRIMARY KEY
 # --------------------------------------------------
 
-DEFAULT_AUTO_FIELD = (
-    "django.db.models.BigAutoField"
-)
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
